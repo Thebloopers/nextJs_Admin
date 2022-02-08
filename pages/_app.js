@@ -8,6 +8,12 @@ import theme from "../src/theme/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import FullLayout from "../src/layouts/FullLayout";
 import "../styles/style.css";
+import {Route,Redirect} from "react-router-dom"
+import { isAuthenticated, signin } from "../src/auth";
+import Signin from "./signin";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
+import RouteGuard from "../src/components/authRotes/RouteGuard";
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -17,16 +23,21 @@ export default function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Flexy NextJs Starter kit page</title>
+        <title>Admin Panel</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
+      <RouteGuard>
+      {isAuthenticated() ?
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <FullLayout>
-          <Component {...pageProps} />
-        </FullLayout>
-      </ThemeProvider>
-    </CacheProvider>
+            <CssBaseline />
+            <FullLayout>
+              <Component {...pageProps} />
+            </FullLayout>
+      </ThemeProvider> :
+      <Component {...pageProps} />
+      }
+      </RouteGuard>      
+      </CacheProvider>    
   );
 }
 

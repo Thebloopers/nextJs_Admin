@@ -6,14 +6,22 @@ import {
   Box,
   Menu,
   Typography,
-  Link,
   ListItemButton,
   List,
   ListItemText,
   Button,
   Divider,
 } from "@mui/material";
+import { isAuthenticated, signout } from "../../auth";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 const ProfileDD = () => {
+
+  const router = useRouter();
+
+  const { user } = isAuthenticated();
+
   const [anchorEl4, setAnchorEl4] = React.useState(null);
 
   const handleClick4 = (event) => {
@@ -23,6 +31,7 @@ const ProfileDD = () => {
   const handleClose4 = () => {
     setAnchorEl4(null);
   };
+
   return (
     <>
       <Button
@@ -64,7 +73,7 @@ const ProfileDD = () => {
                 ml: 1,
               }}
             >
-              Julia
+              {user.firstName}
             </Typography>
             <FeatherIcon icon="chevron-down" width="20" height="20" />
           </Box>
@@ -105,11 +114,16 @@ const ProfileDD = () => {
           </Box>
           <Divider />
           <Box p={2}>
-            <Link to="/">
-              <Button fullWidth variant="contained" color="primary">
-                Logout
-              </Button>
-            </Link>
+            
+            {isAuthenticated() && (
+                    <Link href="/">
+                    <Button fullWidth variant="contained" color="primary" onClick={() => {
+                      signout(() => router.push('/'));
+                    }}>
+                      Logout
+                    </Button>
+                  </Link>
+                )}
           </Box>
         </Box>
       </Menu>

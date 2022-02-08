@@ -3,4 +3,34 @@
 }
 .roundedCircle {
   border-radius: 100%;
+
+}
+
+body {
+  background-image: url('./Images/backgroundPic.jpg');
+}
+
+.signinPageLogo {
+  font-size: 300px !important;
+}
+
+.loginText {
+  font-family: 'emoji';
+  color: blanchedalmond;
+}
+
+@media screen and (max-width: 992px) {
+  
+  .signinPageLogo {
+    font-size: 200px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  
+  .signinPageLogo {
+    font-size: 120px !important;
+    margin-left: 15px;
+    align-items: center;
+  }
 }
